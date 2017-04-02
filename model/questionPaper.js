@@ -30,7 +30,10 @@ const addQuestion=(subjectID,year,link,examType,callback)=>{
         {
             questionPaper.update({subjectID,year,examType},{subjectID,year,examType,link},(err,res)=>
             {
-                mongoose.connection.close();
+                mongoose.connection.close((err)=>
+                {
+                    callback(err);
+                });
             });
         }else{
             
