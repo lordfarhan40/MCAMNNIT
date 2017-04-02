@@ -1,0 +1,73 @@
+<html>
+    {{>header}}
+    <script>
+        function initialiseList(){
+                var xmlHttp=new XMLHttpRequest();
+                xmlHttp.onreadystatechange=()=>
+                {
+                    if(xmlHttp.readyState==4)
+                    {
+                        $("#subject_select").html("<option value='0'>All</option>"+xmlHttp.responseText);
+                    }
+                }
+                xmlHttp.open("GET","/subjects?semester="+$("#semester_select").val(),true);
+                xmlHttp.send();
+        }
+        function initialisePage(){
+            $("#semester_select").on('change',()=>
+            {
+                if($("#semester_select").val()=="0"){
+                    $("#subject_select").prop('disabled',true);
+                    $("#subject_select").html("<option value='0'>All</option>");
+                    return;
+                }
+                else
+                {
+                    $("#subject_select").prop('disabled',false);
+                    initialiseList();
+                }
+            });
+        }
+        $(document).ready(()=>
+        {
+            initialisePage();
+        });
+    </script>
+    <body>
+        {{>top_user}}
+        <div class="container">
+        <form class="form-inline" class="col-lg-12">
+        <div class="form-group col-lg-2">
+            <label for="semester_select">Semester: </label>
+            <select class="form-control" id="semester_select" name="semester">
+                <option value="0">All</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-5">
+            <label for="subject_select">Subject: </label>
+            <select class="form-control" id="subject_select" name="subject" disabled="disabled">
+                <option value="0">All</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-3">
+            <label for="exam_type_select">Exam Type: </label>
+            <select class="form-control" id="exam_type_select" name="exam_type">
+                <option val="0">All</option>
+                <option value="1">End Semester</option>
+                <option value="2">Mid Semester</option>
+                <option value="3">Test</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-info btn-2">Filter Results</button>
+        </form>
+        <table class='table'>
+            {{{fullTable}}}
+        </table>
+        </div>
+    </body>
+</html>

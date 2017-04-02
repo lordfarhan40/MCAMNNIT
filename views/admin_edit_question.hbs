@@ -1,0 +1,95 @@
+<html>
+    {{>header}}
+    <script>
+        function initialiseList(){
+                var xmlHttp=new XMLHttpRequest();
+                xmlHttp.onreadystatechange=()=>
+                {
+                    if(xmlHttp.readyState==4)
+                    {
+                        $("#subject_select").html(xmlHttp.responseText);
+                    }
+                }
+                xmlHttp.open("GET","/subjects?semester="+$("#semester_select").val(),true);
+                xmlHttp.send();
+        }
+        function initialisePage(){
+            initialiseList();
+            $("#semester_select").on('change',()=>
+            {
+                initialiseList();
+            });
+            $("#questionPaperInfoForm").submit(()=>
+            {
+                if($("#questionURL").val().trim()=="")
+                {
+                    $("#noURLWarning").show();
+                    return false;   
+                }
+                return true;
+            });
+        }
+        $(document).ready(()=>
+        {
+            initialisePage();
+            
+        });
+        </script>
+    <body>
+        {{>top_admin}}
+        <div class="container">
+            <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-offset-2 col-xs-8">
+            <form method="POST" id="questionPaperInfoForm" action="/admin-panel">
+                <div class="form-group">
+                    <label for="semester_select">Select the semester:</label>
+                    <select class="form-control" name="semester" id="semester_select">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subject_select">Select the subject Name:</label>
+                    <select class="form-control" name="subject" id="subject_select">
+                        <option value="0">Select the semester first </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="year_select">Select the year:</label>
+                    <select class="form-control" name="year" id="year_select">
+                        <option>2006</option>
+                        <option>2007</option>
+                        <option>2008</option>
+                        <option>2009</option>
+                        <option>2010</option>
+                        <option>2011</option>
+                        <option>2012</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                        <option>2016</option>
+                        <option>2017</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exam_type">Select the type of exam:</label>
+                    <select class="form-control" name="exam_type" id="type_select">
+                        <option>End Semester</option>
+                        <option>Mid Semester</option>
+                        <option>Class Test</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exam_type">Enter the URL of the document:</label>
+                    <input class="form-control" type="text" placeholder="URL of the Question paper." name="URL" id="questionURL" >
+                    <div class="alert alert-warning" role="alert" id="noURLWarning" style="display:none">
+                        <strong>Alert!</strong> Please enter the URL of the question.
+                    </div>
+                </div>
+                <button class="btn btn-block btn-info" formid="questionPaperInfoForm">Save</button>
+            </form>
+        </div>
+        </div>
+    </body>
+</html>
