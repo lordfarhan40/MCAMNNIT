@@ -1,5 +1,5 @@
 //various constants
-const COOKIE_SECRET=Process.env.COOKIE_SECRET||"MyLittleSecret";
+const COOKIE_SECRET=process.env.COOKIE_SECRET||"MyLittleSecret";
 
 const express=require('express');
 const bodyParser=require("body-parser");
