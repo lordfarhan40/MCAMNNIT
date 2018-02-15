@@ -16,9 +16,9 @@
     "express-json": "^1.0.0",
     "express-session": "^1.15.1",
     "hbs": "^4.0.1",
-    "mongo": "^0.1.0",
-    "mongodb": "^2.2.25",
-    "mongoose": "^4.9.1",
+    "mongo": "0.1.0",
+    "mongodb": "2.2.25",
+    "mongoose": "4.9.1",
     "yargs": "^7.0.2"
   }
 }
